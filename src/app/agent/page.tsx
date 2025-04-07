@@ -10,7 +10,7 @@ type Props = {
 }
 
 export default async function AgentPage({ params }: Props) {
-  const { slug } = await params
+  const { slug } = params
 
   const { data: agent, error } = await supabase
     .from("agents")
