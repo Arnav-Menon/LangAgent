@@ -48,7 +48,7 @@ export function Sidebar() {
   
       const { data, error } = await supabase
         .from("agents")
-        .select("name, slug, user_id")
+        .select("id, name, slug, user_id, description, config->>system_prompt")
         .eq("user_id", session.user.id)
         .order("created_at", { ascending: false })
   
@@ -56,7 +56,7 @@ export function Sidebar() {
         console.error("❌ Error fetching agents:", error)
       } else {
         console.log("✅ Agents fetched:", data)
-        setAgents(data)
+        setAgents(data as AgentConfig[])
       }
     }
   

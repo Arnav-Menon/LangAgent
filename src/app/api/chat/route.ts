@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
 
   const reply = chat.choices[0].message
 
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Save user + assistant message
   await supabase.from("messages").insert([

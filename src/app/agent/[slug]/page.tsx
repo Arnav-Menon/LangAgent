@@ -9,7 +9,7 @@ type AgentPageProps = {
 }
 
 export default async function AgentPage({ params }: AgentPageProps) {
-  const supabase = createClient()
+  const supabase = await createClient()
   const {
     data: { user },
   } = await supabase.auth.getUser()
