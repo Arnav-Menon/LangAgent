@@ -8,7 +8,7 @@ export default async function AgentPage({ params }: { params: { slug: string } }
     data: { user },
   } = await supabase.auth.getUser()
 
-  const { slug } = await params
+  const { slug } = params
 
   const { data: agent, error } = await supabase
     .from("agents")
