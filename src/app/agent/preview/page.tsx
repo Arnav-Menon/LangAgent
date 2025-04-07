@@ -4,12 +4,13 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useMemo, useState } from "react"
 import { createBrowserClient } from "@supabase/ssr"
 import { ChatWindow } from "@/components/ChatWindow"
+import { User } from "@supabase/supabase-js"
 
 export default function PreviewAgentPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const raw = searchParams.get("config")
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<User | null>(null)
 
   const supabase = useMemo(() => createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -65,8 +66,12 @@ export default function PreviewAgentPage() {
         </button>
       </div>
 
-      {/* Your chat UI component */}
-      <ChatWindow systemPrompt={config.system_prompt || ""} />
+      <ChatWindow
+        agentId="preview-agent"
+        userId={user?.id}
+        systemPrompt={config.system_prompt || ""}
+        initialMessages={[]}
+      />
     </div>
   )
 }
