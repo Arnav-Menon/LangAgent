@@ -4,12 +4,6 @@ import { supabase } from "@/lib/supabase"
 import { notFound } from "next/navigation"
 import { type PageProps } from "next"
 
-type Props = {
-  params: {
-    slug: string
-  }
-}
-
 export default async function AgentPage({ params }: PageProps<{ slug: string }>) {
   const { slug } = params
 
