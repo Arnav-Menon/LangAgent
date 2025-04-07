@@ -2,9 +2,14 @@ export const dynamic = "force-dynamic"
 
 import { supabase } from "@/lib/supabase"
 import { notFound } from "next/navigation"
-import { type PageProps } from "next"
 
-export default async function AgentPage({ params }: PageProps<{ slug: string }>) {
+type AgentPageProps = {
+  params: {
+    slug: string
+  }
+}
+
+export default async function AgentPage({ params }: AgentPageProps) {
   const { slug } = params
 
   const { data: agent, error } = await supabase

@@ -1,10 +1,14 @@
 import { notFound } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { ChatWindow } from "@/components/ChatWindow"
-import { type PageProps } from "next"
 
+type AgentPageProps = {
+  params: {
+    slug: string
+  }
+}
 
-export default async function AgentPage({ params }: PageProps<{ slug: string }>) {
+export default async function AgentPage({ params }: AgentPageProps) {
   const supabase = createClient()
   const {
     data: { user },
