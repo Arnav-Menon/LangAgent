@@ -19,7 +19,8 @@ export default function PreviewAgentPage() {
   const config = useMemo(() => {
     try {
       return raw ? JSON.parse(decodeURIComponent(raw)) : null
-    } catch (err) {
+    } catch {
+      console.error("Invalid config param")
       return null
     }
   }, [raw])
@@ -50,7 +51,7 @@ export default function PreviewAgentPage() {
 
       <div className="bg-yellow-100 text-yellow-800 text-sm rounded px-4 py-3 mt-4 mb-6">
         <p>
-          You're not signed in — this agent is temporary and won’t be saved.{" "}
+          You are not signed in — this agent is temporary and will not be saved.{" "}
           <a href={`/login?redirect=/create-agent?config=${encodeURIComponent(JSON.stringify(config))}`} className="underline text-blue-600">
             Log in to save it
           </a>

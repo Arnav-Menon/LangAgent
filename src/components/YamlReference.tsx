@@ -28,12 +28,12 @@ export default function YamlReference() {
               <tr>
                 <td className="font-mono">description</td>
                 <td>string</td>
-                <td>A short summary of the agent’s purpose</td>
+                <td>A short summary of the agent&apos;s purpose</td>
               </tr>
               <tr>
                 <td className="font-mono">system_prompt</td>
                 <td>string</td>
-                <td>Defines the agent's personality, tone, and behavior</td>
+                <td>Defines the agent&apos;s personality, tone, and behavior</td>
               </tr>
               <tr>
                 <td className="font-mono">tools</td>

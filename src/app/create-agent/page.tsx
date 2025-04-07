@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid"
 import { Textarea, Button } from "@/components/ui"
 import Link from "next/link"
 import YamlReference from "@/components/YamlReference"
+import { User } from "@supabase/supabase-js"
 
 const sampleAgents: { name: string; yaml: string }[] = [
   {
@@ -42,7 +43,7 @@ export default function CreateAgentPage() {
   const router = useRouter()
   const [yamlText, setYamlText] = useState("")
   const [error, setError] = useState("")
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -61,7 +62,7 @@ ${(config.tools || []).map((t: string) => `  - ${t}`).join("\n")}`
         const url = new URL(window.location.href)
         url.searchParams.delete("config")
         window.history.replaceState({}, "", url.toString())
-      } catch (err) {
+      } catch {
         console.error("Invalid config param")
       }
     }
@@ -73,7 +74,7 @@ ${(config.tools || []).map((t: string) => `  - ${t}`).join("\n")}`
       setUser(session?.user || null)
     }
     getSession()
-  }, [searchParams])
+  }, [searchParams, supabase.auth])
 
   const handleSave = async () => {
     const config = parseAgentConfig(yamlText)
@@ -115,7 +116,7 @@ ${(config.tools || []).map((t: string) => `  - ${t}`).join("\n")}`
       {!user && (
         <div className="bg-yellow-100 text-yellow-800 text-sm rounded px-4 py-3 mb-4 border border-yellow-300">
           <p>
-            <strong>You're not signed in</strong> — this agent may not be saved.
+            <strong>You are not signed in</strong> — this agent may not be saved.
             <br />
             <Link href="/login" className="underline hover:text-yellow-900">
               Log in to save it permanently

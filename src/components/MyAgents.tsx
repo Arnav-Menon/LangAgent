@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase/client"
 import Link from "next/link"
+import { AgentConfig } from "@/types/agent"
 
 export default function MyAgents() {
-  const [agents, setAgents] = useState<any[]>([])
+  const [agents, setAgents] = useState<AgentConfig[]>([])
 
   useEffect(() => {
     const fetchAgents = async () => {

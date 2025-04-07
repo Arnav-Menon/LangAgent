@@ -6,6 +6,8 @@ import clsx from "clsx"
 import { useEffect, useMemo, useState } from "react"
 import { createBrowserClient } from "@supabase/ssr"
 import AuthButton from "@/components/AuthButton"
+import { User } from "@supabase/supabase-js"
+import { AgentConfig } from "@/types/agent"
 
 const navLinks = [
   { href: "/", label: "Home", icon: "🏠" },
@@ -17,8 +19,8 @@ const navLinks = [
 export function Sidebar() {
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
-  const [agents, setAgents] = useState<any[]>([])
-  const [user, setUser] = useState<any>(null)
+  const [agents, setAgents] = useState<AgentConfig[]>([])
+  const [user, setUser] = useState<User | null>(null)
 
   const supabase = useMemo(() => createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
