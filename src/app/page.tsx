@@ -1,103 +1,121 @@
-import Image from "next/image";
+import Link from "next/link"
+import { PageWrapper } from "@/components/page-wrapper"
+import { createClient } from "@/lib/supabase/server"
 
-export default function Home() {
+export default async function LandingPage() {
+  const supabase = createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <PageWrapper>
+      <div className="max-w-3xl mx-auto text-center">
+        <h1 className="text-4xl sm:text-6xl font-bold tracking-tight">
+          {user
+            ? `Welcome back, ${user.email?.split("@")[0]} 👋`
+            : "Build & Chat with Custom AI Agents"}
+        </h1>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <p className="mt-6 text-lg text-muted-foreground">
+          {user
+            ? "Jump back in to create, manage, or chat with your saved agents."
+            : "LangAgent lets you design, test, and deploy GPT-powered agents using simple YAML/JSON — with built-in tools, memory, and more."}
+        </p>
+
+        <div className="mt-10 flex justify-center gap-x-6">
+          {user ? (
+            <>
+              <Link
+                href="/create-agent"
+                className="rounded-md bg-green-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-green-500 transition"
+              >
+                + New Agent
+              </Link>
+              <Link
+                href="/dashboard"
+                className="rounded-md bg-zinc-900 border border-zinc-700 px-6 py-3 text-base font-semibold text-white hover:bg-zinc-800 transition"
+              >
+                View Dashboard
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/create-agent"
+                className="rounded-md bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-500 transition"
+              >
+                🚀 Get Started
+              </Link>
+              <a
+                href="https://github.com/yourrepo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-semibold leading-6 hover:underline underline-offset-4"
+              >
+                GitHub →
+              </a>
+            </>
+          )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+      </div>
+
+      <section className="mt-32 max-w-4xl mx-auto">
+        <h2 className="text-2xl font-semibold mb-6 text-center">Why LangAgent?</h2>
+        <div className="grid sm:grid-cols-2 gap-8 text-left">
+          <div>
+            <h3 className="text-lg font-bold mb-1">🧠 Define agents with code</h3>
+            <p className="text-muted-foreground text-sm">
+              Use simple YAML or JSON to define prompts, tools, and behavior.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold mb-1">💬 Real-time chat</h3>
+            <p className="text-muted-foreground text-sm">
+              Chat with your agents instantly, with support for GPT-4 and tools.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold mb-1">🔧 Function calling</h3>
+            <p className="text-muted-foreground text-sm">
+              Easily plug in calculators, web search, or your own functions.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold mb-1">📦 Share or embed</h3>
+            <p className="text-muted-foreground text-sm">
+              Deploy agents and share public links — or embed them in websites.
+            </p>
+          </div>
+        </div>
+      </section>
+    </PageWrapper>
+  )
 }
+
+
+
+// import { createClient } from "@/lib/supabase/server"
+// import { redirect } from "next/navigation"
+
+// export default async function Home() {
+//   const supabase = await createClient()
+
+//   const {
+//     data: { user },
+//   } = await supabase.auth.getUser()
+
+//   // Redirect to login if feature flag is on and user is not signed in
+//   if (process.env.LOGIN_REQUIRED === "true" && !user) {
+//     return redirect("/login")
+//   }
+
+//   return (
+//     <main className="p-6 max-w-2xl mx-auto">
+//       <h1 className="text-3xl font-bold">Welcome to LangAgent</h1>
+//       <p className="mt-4 text-muted-foreground">
+//         This is your home base. Let’s build some agents.
+//       </p>
+//     </main>
+//   )
+// }

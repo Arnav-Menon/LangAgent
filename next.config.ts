@@ -1,7 +1,18 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+      }
+    }
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
+    return config
+  },
+  env: {
+    LOGIN_REQUIRED: process.env.LOGIN_REQUIRED,
+  },
+}
 
-export default nextConfig;
+module.exports = nextConfig
