@@ -15,7 +15,7 @@ export default function MyAgents() {
 
       const { data } = await supabase
         .from("agents")
-        .select("id, name, slug")
+        .select("id, name, slug, description, system_prompt")
         .eq("user_id", user.id)
       setAgents(data || [])
     }
