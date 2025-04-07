@@ -9,7 +9,7 @@ export function ChatWindow({
   initialMessages = [],
 }: {
   agentId: string
-  userId: string
+  userId: string | undefined
   systemPrompt: string
   initialMessages: { role: string; content: string }[]
 }) {
